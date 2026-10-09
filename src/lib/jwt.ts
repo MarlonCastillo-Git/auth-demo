@@ -41,6 +41,7 @@ function base64url(input: string): string {
 // Runtime — por eso esta función nunca se llama desde proxy.ts.
 
 export function verifyToken(token: string): JwtPayload | null {
+    console.log(token);
     const parts = token.split(".");
     if (parts.length !== 3) return null;
         const [headerB64, payloadB64, signature] = parts;
@@ -55,6 +56,7 @@ export function verifyToken(token: string): JwtPayload | null {
         Buffer.from(payloadB64, "base64url").toString()
     ) as JwtPayload;
 
+    
     // Token vencido.
     if (payload.exp < Math.floor(Date.now() / 1000)) return null;
     return payload;
